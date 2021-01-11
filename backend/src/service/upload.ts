@@ -17,7 +17,7 @@ export async function optimize(id: String, path: String, ext: String = 'jpg'): P
   await Promise.all(
     Object.keys(photoVersions).map(async (key) => {
       const [width, quality] = photoVersions[key]
-      const opath = `${outpath}/${key}/${id}.${ext}`
+      const opath = `${outpath}/thumb/${key}/${id}.${ext}`
       try {
         if (width) await image.resize(width, Jimp.AUTO)
         if (quality) await image.quality(quality)
