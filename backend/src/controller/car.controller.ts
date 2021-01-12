@@ -37,12 +37,12 @@ export default class CarController extends BaseController {
       } catch (e) {
         console.log(e.message)
       }
-      return {
-        ...car, image: createLinkAsset(req, photo)
-      }
+      return { ...car, image: createLinkAsset(req, photo) }
     }));
 
-    return res.json(carWithPhotos)
+    return res.json({
+      data: carWithPhotos
+    })
   }
 }
 
