@@ -1,5 +1,5 @@
-import React from 'react'
-// import { Spacing } from '../../styles'
+import React, { useMemo } from 'react'
+import { Spacing } from '../../styles'
 import { useScreenDimensions } from '../../hooks/useScreenDimensions'
 
 import { Image } from './styles'
@@ -12,14 +12,17 @@ interface Props {
 const Cover = ({ source }: Props) => {
   const size = useScreenDimensions()
 
+  /// memoize props
+  const imageProps = useMemo(() => ({
+    source: { uri: source },
+    style: {
+      width: size.width - Spacing.padding * 2,
+      height: size.width * 0.67,
+    }
+  }), [size, source]);
+
   return (
-    <Image
-      source={{ uri: source }}
-      style={{
-        width: size.width,
-        height: size.width * 0.67,
-      }}
-    />
+    <Image {...imageProps} />
   )
 }
 
