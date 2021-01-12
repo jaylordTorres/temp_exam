@@ -2,4 +2,4 @@
 .vscode
 # macOS
 **/.DS_Store
-backend/assets/thumb/*
+backend/thumb/*
