@@ -10,14 +10,14 @@ const photoVersions: Record<string, [number, number]> = {
 type IOptimize = Record<string, string>;
 
 // generate thumbnails image
-async function optimize(id: String, path: String, ext: String = 'jpg'): Promise<IOptimize> {
+export async function optimize(id: String, path: String, ext: String = 'jpg'): Promise<IOptimize> {
   const image = await Jimp.read(path)
   const result: IOptimize = {}
 
   await Promise.all(
     Object.keys(photoVersions).map(async (key) => {
       const [width, quality] = photoVersions[key]
-      const opath = `${outpath}/${key}/${id}.${ext}`
+      const opath = `${outpath}/thumb/${key}/${id}.${ext}`
       try {
         if (width) await image.resize(width, Jimp.AUTO)
         if (quality) await image.quality(quality)
@@ -31,7 +31,6 @@ async function optimize(id: String, path: String, ext: String = 'jpg'): Promise<
   )
   return result
 }
-module.exports = { optimize }
 
 // test
 if (require.main === module) {
@@ -40,4 +39,4 @@ if (require.main === module) {
     console.log(result)
   }
   testing()
-}
+} 
