@@ -1,22 +1,13 @@
-import { ICar } from '../type';
+import { ICar, ICarJson, IMaker } from '../type';
 import { optimize as optimizePhoto } from './upload';
-const sqlite3 = require('sqlite3').verbose();
+import Sqlite from 'sqlite3';
+
+const sqlite3 = Sqlite.verbose();
 const genId = require('uuid').v4;
 const data = require('../cars.json')
 
 export const db = new sqlite3.Database(':memory:');
 
-interface ICarJson {
-  id: string
-  make: string
-  model: string
-  year: number
-}
-
-interface IMaker {
-  id: string
-  name: string
-}
 
 ///
 /// migration
