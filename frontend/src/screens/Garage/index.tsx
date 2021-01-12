@@ -3,35 +3,38 @@ import { ScrollView } from 'react-native'
 import { getList } from '../../services/api'
 import CardListItem from '../../components/CardListItem'
 import { Space, Title } from './styles'
+import { ICar } from '../../types'
 
 const Garage = () => {
   const [data, setData] = useState([])
 
   useEffect(() => {
     const updateData = async () => {
-      const res = await getList()
-      setData(res.items)
+      try {
+        const res = await getList()
+        setData(res.items)
+
+      } catch (e) {
+        console.log(e.message);
+      }
     }
     updateData()
   }, [])
 
   return (
-    <ScrollView>
+    <ScrollView
+
+    >
       <Title>Garage</Title>
-      {data.map((item: any) => (
-        <>
-          <CardListItem
-            id={item.model}
-            model={item.model}
-            make={item.make}
-            year={item.year}
-            coverURL={item?.image?.url}
-          />
+      {data.map((car: ICar, int: number) => (
+        <React.Fragment key={`${car.id}#${car.model}`}>
+          <CardListItem car={car} />
           <Space />
-        </>
+        </React.Fragment>
       ))}
     </ScrollView>
   )
 }
+
 
 export default Garage
