@@ -1,3 +1,4 @@
+import { ICar } from '../type';
 import { optimize as optimizePhoto } from './upload';
 const sqlite3 = require('sqlite3').verbose();
 const genId = require('uuid').v4;
@@ -25,8 +26,12 @@ interface IMaker {
 export function migration() {
 
   db.run("CREATE TABLE make (id STRING UNIQUE, name TEXT)");
-  db.run("CREATE TABLE photo (id STRING UNIQUE, car_id STRING, name STRING)");
-  db.run("CREATE TABLE car (id STRING UNIQUE, make_id STRING, model STRING, year INT)");
+  db.run(`CREATE TABLE photo (id STRING UNIQUE, car_id STRING, name STRING)
+  `);
+  db.run(`
+    CREATE TABLE car (id STRING UNIQUE, make_id STRING, model STRING, year INT,  
+    FOREIGN KEY(make_id) REFERENCES make(make_id))
+  `);
   /// process makers
   const makers = getAllMaker(data.items)
   const makersIds = toIds(makers)
@@ -37,31 +42,20 @@ export function migration() {
   /// process cars
   const cars: ICarJson[] = data.items
   const carSmt = db.prepare("INSERT INTO car VALUES (?, ?, ?, ?)");
-  const addedCarIds: string[] = [];
   cars.forEach(i => {
-    if (!i.id || addedCarIds.includes(i.id)) {
-      /// means this record has already been added to db
-      // console.log('invalid id', i.id)
-      return
-    }
-    carSmt.run(i.id, makersIds[i.make], i.model, i.year)
-    addedCarIds.push(i.id)
+    carSmt.run(genId(), makersIds[i.make], i.model, i.year)
   })
-  carSmt.finalize();
 
   /// process images
   const assets = getAssets();
   const assetSmt = db.prepare("INSERT INTO photo VALUES (?, ?, ?)");
-  addedCarIds.forEach((carId => {
-    const name = `vehicle_image-${carId}.jpg`
-    if (assets.includes(name)) {
-      assetSmt.run(genId(), carId, name)
-      console.log('has photo', name)
-      /// this will create thumbnails images on assets
-      optimizePhoto(carId, 'assets/' + name, 'jpg')
-    }
-  })
-  )
+  db.each("SELECT id, make_id, year, model FROM car", function (err: Error, car: ICar) {
+    if (err) { return; }
+    const name = getRanodmImageFilename(assets);
+    assetSmt.run(genId(), car.id, name)
+    /// this will create thumbs images 
+    optimizePhoto(car.id, 'assets/' + name, 'jpg')
+  });
 
   db.each("SELECT id, name FROM make", function (err: Error, row: any) {
     err ? console.log(err) : null
@@ -70,8 +64,9 @@ export function migration() {
   db.each("SELECT id, make_id, year, model FROM car", function (err: Error, row: any) {
     err ? console.log(err) : null
   });
-  db.each("SELECT id, car_id, name model FROM photo", function (err: Error, row: any) {
+  db.each("SELECT id, car_id, name FROM photo", function (err: Error, row: any) {
     err ? console.log(err) : null
+    console.log(row)
   });
   console.log('db migrated and add contents')
 }
@@ -92,15 +87,22 @@ function toIds(item: IMaker[] = []): Record<string, string> {
   return item.reduce((c, p) => ({ ...c, [p.name]: p.id }), {})
 }
 
+/// get all prefilled assets
+/// will use to randomaise json items photos
 function getAssets(): string[] {
   const assets: string[] = [];
   const files = './assets/';
   const fs = require('fs');
   fs.readdirSync(files).forEach((file: string) => {
-    assets.push(file)
+    if (file.match(/\.jpg/i)) {
+      assets.push(file)
+    }
   });
 
   return assets
+}
+function getRanodmImageFilename(images: string[]): string {
+  return images[Math.floor(Math.random() * images.length)]
 }
 
 export function iniitalize() {
