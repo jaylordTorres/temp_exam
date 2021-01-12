@@ -1,10 +1,8 @@
 import { Router } from 'express'
-import * as cars from './cars.json'
+import CarController from './controller/car.controller'
 
 const router = Router()
 
-router.get('/', (req, res) => {
-  res.json(cars)
-})
+new CarController(router);
 
 export default router
