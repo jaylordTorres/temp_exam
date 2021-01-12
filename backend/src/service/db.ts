@@ -43,9 +43,10 @@ export function migration() {
   db.each("SELECT id, make_id, year, model FROM car", function (err: Error, car: ICar) {
     if (err) { return; }
     const name = getRanodmImageFilename(assets);
-    assetSmt.run(genId(), car.id, name)
+    const id = genId()
+    assetSmt.run(id, car.id, name)
     /// this will create thumbs images 
-    optimizePhoto(car.id, 'assets/' + name, 'jpg')
+    optimizePhoto(id, 'assets/' + name, 'jpg')
   });
 
   db.each("SELECT id, name FROM make", function (err: Error, row: any) {

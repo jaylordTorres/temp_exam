@@ -8,11 +8,13 @@ export const promisafy = <T>(fn: Function, arg: any) =>
 
 export const createLinkAsset = (req: Request, photo?: IPhoto): IImageWithThumbs => {
   const host = req.get('host')
-  const name = photo?.name
+  const name = photo?.name || '.'
+  const id = photo?.id || ''
+  const ext = name.split('.').slice(-1)[0];
   return {
     url: `${host}/assets/${name}`,
-    xs: `${host}/assets/thumb/xs/${name}`,
-    sm: `${host}/assets/thumb/sm/${name}`,
-    md: `${host}/assets/thumb/sm/${name}`
+    xs: `${host}/thumb/${id}-xs.${ext}`,
+    sm: `${host}/thumb/${id}-sm.${ext}`,
+    md: `${host}/thumb/${id}-md.${ext}`
   }
 }

@@ -2,7 +2,7 @@ import { photoVersions } from "../constant";
 
 const Jimp = require('jimp');
 
-const outpath = 'assets'
+const outpath = 'thumb'
 
 
 type IOptimize = Record<string, string>;
@@ -15,7 +15,7 @@ export async function optimize(id: String, path: String, ext: String = 'jpg'): P
   await Promise.all(
     Object.keys(photoVersions).map(async (key) => {
       const [width, quality] = photoVersions[key]
-      const opath = `${outpath}/thumb/${key}/${id}.${ext}`
+      const opath = `${outpath}/${id}-${key}.${ext}`
       try {
         if (width) await image.resize(width, Jimp.AUTO)
         if (quality) await image.quality(quality)
