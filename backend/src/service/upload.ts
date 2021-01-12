@@ -1,11 +1,9 @@
+import { photoVersions } from "../constant";
+
 const Jimp = require('jimp');
 
 const outpath = 'assets'
-const photoVersions: Record<string, [number, number]> = {
-  xs: [150, 50],
-  sm: [300, 60],
-  md: [450, 80],
-}
+
 
 type IOptimize = Record<string, string>;
 
