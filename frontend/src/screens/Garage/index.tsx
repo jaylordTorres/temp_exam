@@ -12,7 +12,7 @@ const Garage = () => {
     const updateData = async () => {
       try {
         const res = await getList()
-        setData(res.items)
+        setData(res.data)
 
       } catch (e) {
         console.log(e.message);
