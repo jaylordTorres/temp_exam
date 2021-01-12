@@ -3,9 +3,9 @@ export interface IImage {
 }
 export interface IImageWithThumbs {
   url: string
-  xs: string
-  sm: string
-  md: string
+  xs?: string
+  sm?: string
+  md?: string
 }
 export interface ICar {
   id: string
