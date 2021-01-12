@@ -3,6 +3,7 @@ import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
 import { TouchableOpacity } from 'react-native'
 
 import { toggleStar } from '../../store/actions'
+import { ICar } from '../../types'
 
 import Cover from '../Cover'
 
@@ -17,15 +18,12 @@ import {
 } from './styles'
 
 export interface CarProps {
-  id: string
-  model: string
-  make: string
-  year: string
-  coverURL: string
+  /// remove redundant fields
+  car: ICar
   starred?: boolean
 }
 
-const CardListItem: React.FC<CarProps> = (car: CarProps) => {
+const CardListItem: React.FC<CarProps> = ({ car }) => {
   const star = useSelector<RootStateOrAny>((state) => {
     return state.star.starred[car.id]
   })
@@ -37,11 +35,11 @@ const CardListItem: React.FC<CarProps> = (car: CarProps) => {
 
   return (
     <Card>
-      <Cover source={car.coverURL} />
+      <Cover source={car?.image?.url} />
       <Details>
         <Header>
           <Model>{car.model}</Model>
-          <TouchableOpacity onPress={() => _toggleStar()}>
+          <TouchableOpacity onPress={_toggleStar}>
             <StarIcon star={star} />
           </TouchableOpacity>
         </Header>

@@ -40,8 +40,11 @@ export const Line = styled.View`
 export const MakeYear = styled.Text`
   paddingVertical: ${Spacing.extraMargin}px;
 `
-
-export const StarIcon = styled(AntDesign).attrs(props => ({
+/// added propsType
+interface StarProps {
+  star: any
+}
+export const StarIcon = styled(AntDesign).attrs((props: StarProps) => ({
   name: props.star ? 'star' : 'staro',
   color: props.star ? Colors.starColor : Colors.textColor,
   size: 24
