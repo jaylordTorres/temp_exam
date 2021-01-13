@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { ScrollView } from 'react-native'
+import { FlatList, View } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { getList } from '../../services/api'
 import { ICar, RootStackParamList } from '../../types'
@@ -31,16 +31,20 @@ const Garage = ({ navigation }: GarageProps) => {
     return navigation.navigate('Details', car)
   }, [])
 
+  const renderItem = useCallback(({ item: car }) => {
+    return <CardListItem onPress={onPress} car={car} />
+  }, [])
+
   return (
-    <ScrollView>
+    <View>
       <Title>Garage</Title>
-      {data.map((car: ICar, int: number) => (
-        <React.Fragment key={`${car.id}#${car.model}`}>
-          <CardListItem onPress={onPress} car={car} />
-          <Space />
-        </React.Fragment>
-      ))}
-    </ScrollView>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(car: ICar) => car.id}
+        ItemSeparatorComponent={Space}
+      />
+    </View>
   )
 }
 
