@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { ScrollView } from 'react-native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { getList } from '../../services/api'
+import { ICar, RootStackParamList } from '../../types'
 import CardListItem from '../../components/CardListItem'
 import { Space, Title } from './styles'
-import { ICar } from '../../types'
 
-const Garage = () => {
+
+interface GarageProps {
+  navigation: StackNavigationProp<RootStackParamList>
+}
+
+const Garage = ({ navigation }: GarageProps) => {
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -21,14 +27,16 @@ const Garage = () => {
     updateData()
   }, [])
 
-  return (
-    <ScrollView
+  const onPress = useCallback((car) => {
+    return navigation.navigate('Details', car)
+  }, [])
 
-    >
+  return (
+    <ScrollView>
       <Title>Garage</Title>
       {data.map((car: ICar, int: number) => (
         <React.Fragment key={`${car.id}#${car.model}`}>
-          <CardListItem car={car} />
+          <CardListItem onPress={onPress} car={car} />
           <Space />
         </React.Fragment>
       ))}

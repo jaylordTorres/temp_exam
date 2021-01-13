@@ -1,12 +1,8 @@
-import React from 'react'
-import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
+import React, { useCallback } from 'react'
 import { TouchableOpacity } from 'react-native'
-
-import { toggleStar } from '../../store/actions'
 import { ICar } from '../../types'
-
 import Cover from '../Cover'
-
+import useCarStar from '../../hooks/useCarStar'
 import {
   Card,
   Header,
@@ -18,37 +14,33 @@ import {
 } from './styles'
 
 export interface CarProps {
-  /// remove redundant fields
   car: ICar
   starred?: boolean
+  onPress: Function
 }
 
-const CardListItem: React.FC<CarProps> = ({ car }) => {
-  const star = useSelector<RootStateOrAny>((state) => {
-    return state.star.starred[car.id]
-  })
-  const dispatch = useDispatch()
+const CardListItem: React.FC<CarProps> = ({ car, onPress }) => {
+  const { star, toggleStar: _toggleStar } = useCarStar(car)
 
-  const _toggleStar = () => {
-    dispatch(toggleStar(car.id))
-  }
-
+  const _onPress = useCallback(() => onPress(car), [onPress, car])
   return (
-    <Card>
-      <Cover source={car?.image?.url} />
-      <Details>
-        <Header>
-          <Model>{car.model}</Model>
-          <TouchableOpacity onPress={_toggleStar}>
-            <StarIcon star={star} />
-          </TouchableOpacity>
-        </Header>
-        <Line />
-        <MakeYear>
-          {car.make} | {car.year}
-        </MakeYear>
-      </Details>
-    </Card>
+    <TouchableOpacity onPress={_onPress}>
+      <Card>
+        <Cover source={car?.image?.url} />
+        <Details>
+          <Header>
+            <Model>{car.model}</Model>
+            <TouchableOpacity onPress={_toggleStar}>
+              <StarIcon star={star} />
+            </TouchableOpacity>
+          </Header>
+          <Line />
+          <MakeYear>
+            {car.make} | {car.year}
+          </MakeYear>
+        </Details>
+      </Card>
+    </TouchableOpacity>
   )
 }
 
