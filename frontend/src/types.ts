@@ -9,3 +9,10 @@ export interface ICar {
   year: string
   image: IImage
 }
+
+export type RootStackParamList = {
+  Garage: undefined
+  Details: {
+    params: ICar
+  }
+};
