@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { View } from 'react-native'
+import { View, SafeAreaView } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { ICar, RootStackParamList } from '../../types'
 import {
@@ -21,22 +21,23 @@ interface CarFormProps {
 }
 
 const CarForm = ({ route }: CarFormProps) => {
-  const { config } = useCarFormHook({ route })
+  const { config, state, onChangeMake, onChangeModel, onChangeYear } = useCarFormHook({ route })
+
   return (
     <Container>
       <Caption>photo will automatically generated at the backend for tesing purpose only</Caption>
       <View>
         <Field>
-          <Label>Name:</Label>
-          <Input value="dd" />
+          <Label>Model:</Label>
+          <Input value={state.model} onChangeText={onChangeModel} />
         </Field>
         <Field>
           <Label>Year:</Label>
-          <Input />
+          <Input value={state.year} onChangeText={onChangeYear} keyboardType="numeric" />
         </Field>
         <Field>
-          <Label>Maker:</Label>
-          <Input />
+          <Label>Make:</Label>
+          <Input value={state.make} onChangeText={onChangeMake} />
         </Field>
       </View>
       <View>
