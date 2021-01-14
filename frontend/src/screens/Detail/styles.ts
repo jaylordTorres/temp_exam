@@ -38,6 +38,11 @@ export const Line = styled.View`
   marginVertical: ${Spacing.extraMargin}px;
 `
 
+
+export const Actions = styled.View`
+  flexDirection: row;
+
+`
 export const MakeYear = styled.Text`
   paddingVertical: ${Spacing.extraMargin}px;
 `
@@ -56,3 +61,12 @@ export const StarIcon = styled(AntDesign).attrs((props: StarProps) => ({
   color: props.star ? Colors.starColor : Colors.textColor,
   size: 24
 }))``
+
+
+export const EditIcon = styled(AntDesign).attrs(() => ({
+  name: 'edit',
+  color: Colors.textColor,
+  size: 24
+}))`
+marginHorizontal: ${Spacing.extraMargin}px
+`
