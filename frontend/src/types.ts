@@ -9,6 +9,8 @@ export interface ICar {
   year: string
   image: IImage
 }
+export interface ICarEditType extends Partial<ICar> { }
+
 
 export type RootStackParamList = {
   Garage: undefined
@@ -17,6 +19,8 @@ export type RootStackParamList = {
   },
   Form: {
     type: string
+    id?: string
+    car?: ICar 
   }
 };
 
