@@ -1,13 +1,23 @@
-import { ICar } from '../../types'
+import { ICar, Meta } from '../../types'
+import Const from './constant'
+import { RootStateOrAny } from 'react-redux'
 import { CarState } from './type'
 
-const selectCars = (state: CarState): ICar[] => {
+const selectCars = (state: RootStateOrAny): ICar[] => {
   /// useSelector will automatically memoize this
   /// unlike calling it as anoymouse function that does not memoize
-  return state.ids.map(id => state.values[id])
+  return state[Const.namespace].ids.map((id: string) => state.values[id])
+}
+const selectCarsMeta = (state: RootStateOrAny): Meta => {
+  const carState: CarState = state[Const.namespace];
+  return {
+    loading: carState.loading,
+    error: carState.error
+  }
 }
 
 
 export default {
-  selectCars
+  selectCars,
+  selectCarsMeta
 }

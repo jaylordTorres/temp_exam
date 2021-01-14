@@ -1,5 +1,6 @@
 import {
-  CarFetchFailedPayloadType,
+  CarAddPayloadType,
+  CarFailedPayloadType,
   CarFetchSuccessPayloadType,
   CarUpdatePayloadType,
 } from './type'
@@ -7,14 +8,20 @@ import Const from './constant'
 
 const fetch = () => ({ type: Const.fetch })
 const fetchSuccess = (payload: CarFetchSuccessPayloadType) => ({ payload, type: Const.fetchSuccess })
-const fetchFailed = (payload: CarFetchFailedPayloadType) => ({ payload, type: Const.fetchSuccess })
-const update = (payload: CarUpdatePayloadType) => ({ payload, type: Const.fetchSuccess })
+const failed = (payload: CarFailedPayloadType) => ({ payload, type: Const.fetchSuccess })
+const update = (id: string, payload: CarUpdatePayloadType) => ({ id, payload, type: Const.fetchSuccess })
+const add = (payload: CarAddPayloadType) => ({ payload, type: Const.fetchSuccess })
 
+const remove = (id: string) => ({ id, type: Const.remove })
+const setLoading = (payload: boolean) => ({ payload, type: Const.setLoading })
 
 export default {
+  add,
   fetch,
   fetchSuccess,
-  fetchFailed,
-  update
+  failed,
+  update,
+  setLoading,
+  remove
 }
 

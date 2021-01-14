@@ -1,10 +1,14 @@
 import { ICar, ActionType } from '../../types'
 
-export interface CarFetchFailedPayloadType extends ActionType<string> { }
+export interface CarFailedPayloadType extends ActionType<string> { }
 export interface CarFetchSuccessPayloadType extends ActionType<ICar[]> { }
 
 export interface CarUpdatePayloadType {
   id: string
+  data: ICar
+}
+
+export interface CarAddPayloadType {
   data: ICar
 }
 

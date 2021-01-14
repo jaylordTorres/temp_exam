@@ -1,5 +1,11 @@
-import { ICar, ActionType } from '../../types'
-import { CarPayloadType, CarState } from './type'
+import { ActionType } from '../../types'
+import {
+  CarAddPayloadType,
+  CarFailedPayloadType,
+  CarFetchSuccessPayloadType,
+  CarState,
+  CarUpdatePayloadType
+} from './type'
 import Const from './constant'
 
 const initState = {
@@ -9,7 +15,10 @@ const initState = {
   error: ''
 }
 
-export const carReducer = (state: CarState = initState, action: ActionType<CarPayload | ICar[]>) => {
+export const carReducer = (state: CarState = initState,
+  action: ActionType<CarUpdatePayloadType | CarFetchSuccessPayloadType | CarFailedPayloadType>) => {
+
+
   switch (action.type) {
     case Const.fetch:
       return {
@@ -19,7 +28,7 @@ export const carReducer = (state: CarState = initState, action: ActionType<CarPa
     case Const.fetchSuccess:
       return {
         ...state,
-        ...action.payload as ICar[],
+        ...action.payload as CarFetchSuccessPayloadType,
         error: '',
         loading: false
       }
@@ -29,8 +38,8 @@ export const carReducer = (state: CarState = initState, action: ActionType<CarPa
         error: action.payload,
         loading: false
       }
-    case Const.update:
-      const { id, data } = action.payload as CarPayloadType
+    case Const.update: {
+      const { id, data } = action.payload as CarUpdatePayloadType
       return {
         ...state,
         values: {
@@ -38,6 +47,44 @@ export const carReducer = (state: CarState = initState, action: ActionType<CarPa
           [id]: data
         }
       }
+    }
+    case Const.remove: {
+      const { id } = action;
+      return {
+        ...state,
+        ids: [
+          ...state.ids.filter(i => i != id)
+        ],
+        values: {
+          ...state.values,
+          [id]: undefined
+        }
+      }
+    }
+
+    case Const.add: {
+      /// will add new id on ids, create values item 
+      const { data } = action.payload as CarAddPayloadType
+      return {
+        ...state,
+        ids: [
+          data.id,
+          ...state.ids
+        ],
+        values: {
+          ...state.values,
+          [data.id]: data
+        }
+      }
+    }
+
+    case Const.setLoading: {
+      /// will add new id on ids, create values item 
+      return {
+        ...state,
+        loading: action.payload
+      }
+    }
     default:
       return state
   }
