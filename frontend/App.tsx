@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Garage from './src/screens/Garage'
 import Detail from './src/screens/Detail'
-import Form from './src/screens/Form'
+import Form from './src/screens/CarForm'
 
 const Stack = createStackNavigator();
 
