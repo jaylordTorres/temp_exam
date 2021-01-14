@@ -16,3 +16,9 @@ export type RootStackParamList = {
     params: ICar
   }
 };
+
+
+export interface ActionType<T> {
+  type: string
+  payload: T | string
+}
