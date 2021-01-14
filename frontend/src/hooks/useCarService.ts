@@ -1,8 +1,8 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { createCar, getCars, updateCar, removeCar } from "../services/car.service";
 import { CarSelector, CarActions } from "../store/car";
-import { ICar, Meta } from "../types";
+import { ICar, ICarEditType, Meta } from "../types";
 
 
 const useCarService = () => {
@@ -28,14 +28,14 @@ const useCarService = () => {
     })
   }, [restify, dispatch])
 
-  const create = useCallback(async (car: ICar) => {
+  const create = useCallback(async (car: ICarEditType) => {
     restify(async () => {
       const result = await createCar(car)
       dispatch(CarActions.add(result.data))
     })
   }, [restify, dispatch])
 
-  const update = useCallback(async (id: string, car: ICar) => {
+  const update = useCallback(async (id: string, car: ICarEditType) => {
     restify(async () => {
       const result = await updateCar(id, car)
       dispatch(CarActions.update(id, result.data))
