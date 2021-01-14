@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react'
-import { View, SafeAreaView } from 'react-native'
+import React from 'react'
+import { View } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { ICar, RootStackParamList } from '../../types'
+import { RootStackParamList } from '../../types'
 import {
   Caption,
   Label,
@@ -10,21 +10,40 @@ import {
   Container,
   Submit,
   Remove,
-  ActionText,
-  ErrorLabel
+  ErrorLabel,
+  Loading,
+  DeleteIcon,
+  Actions,
+  SubmitIcon
 } from './styles'
 import { useCarFormHook } from './hook'
 
 interface CarFormProps {
-  route: { params: { type: string } }
+  route: { params: { type: string, id?: string } }
   navigation: StackNavigationProp<RootStackParamList>
 }
 
 const CarForm = ({ route }: CarFormProps) => {
-  const { config, state, onChangeMake, onChangeModel, onChangeYear } = useCarFormHook({ route })
-
+  const {
+    config,
+    meta,
+    state,
+    onSubmit,
+    onDelete,
+    onChangeMake,
+    onChangeModel,
+    onChangeYear
+  } = useCarFormHook({ route })
   return (
     <Container>
+      <Actions>
+        {config.isEdit ? <Remove onPress={onDelete}>
+          <DeleteIcon />
+        </Remove> : <View />}
+        <Submit onPress={onSubmit}>
+          <SubmitIcon />
+        </Submit>
+      </Actions>
       <Caption>photo will automatically generated at the backend for tesing purpose only</Caption>
       <View>
         <Field>
@@ -33,7 +52,7 @@ const CarForm = ({ route }: CarFormProps) => {
         </Field>
         <Field>
           <Label>Year:</Label>
-          <Input value={state.year} onChangeText={onChangeYear} keyboardType="numeric" />
+          <Input value={String(state.year)} onChangeText={onChangeYear} keyboardType="numeric" />
         </Field>
         <Field>
           <Label>Make:</Label>
@@ -41,9 +60,8 @@ const CarForm = ({ route }: CarFormProps) => {
         </Field>
       </View>
       <View>
-        <ErrorLabel>Error</ErrorLabel>
-        {config.isEdit ? <Remove><ActionText>Delete</ActionText></Remove> : null}
-        <Submit><ActionText>Submit</ActionText></Submit>
+        {meta.loading && <Loading>...Loading</Loading>}
+        <ErrorLabel>{meta.error}</ErrorLabel> 
       </View>
     </Container>
   )
