@@ -13,7 +13,7 @@ import {
   ActionText,
   ErrorLabel
 } from './styles'
-import { FormTypes } from '../../constants'
+import { useCarFormHook } from './hook'
 
 interface CarFormProps {
   route: { params: { type: string } }
@@ -21,13 +21,7 @@ interface CarFormProps {
 }
 
 const CarForm = ({ route }: CarFormProps) => {
-  const config = useMemo(() => {
-    return {
-      isEdit: FormTypes.edit === route.params.type
-    }
-  }, [route])
-
-
+  const { config } = useCarFormHook({ route })
   return (
     <Container>
       <Caption>photo will automatically generated at the backend for tesing purpose only</Caption>
@@ -47,8 +41,8 @@ const CarForm = ({ route }: CarFormProps) => {
       </View>
       <View>
         <ErrorLabel>Error</ErrorLabel>
-        <Submit><ActionText>Submit</ActionText></Submit>
         {config.isEdit ? <Remove><ActionText>Delete</ActionText></Remove> : null}
+        <Submit><ActionText>Submit</ActionText></Submit>
       </View>
     </Container>
   )

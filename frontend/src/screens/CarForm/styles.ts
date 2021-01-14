@@ -50,7 +50,7 @@ export const Caption = styled.Text`
 export const Submit = styled.TouchableOpacity`
   backgroundColor: ${Colors.starColor};
   fontFamily: Arial; 
-  padding: ${Spacing.extraMargin}px
+  padding: ${Spacing.extraMargin}px;
 `
 
 
@@ -58,7 +58,7 @@ export const Remove = styled.TouchableOpacity`
   backgroundColor: ${Colors.alerColor};
   fontFamily: Arial; 
   padding: ${Spacing.extraMargin}px;
-  marginTop: ${Spacing.extraMargin}px;
+  marginBottom: ${Spacing.extraMargin}px;
 `
 
 export const ActionText = styled.Text` 
