@@ -20,19 +20,21 @@ export const carReducer = (state: CarState = initState,
 
 
   switch (action.type) {
-    case Const.fetch:
+    case Const.fetch: {
       return {
         ...state,
         loading: true
       }
-    case Const.fetchSuccess:
+    }
+    case Const.fetchSuccess: {
       return {
         ...state,
         ...action.payload as CarFetchSuccessPayloadType,
         error: '',
         loading: false
       }
-    case Const.fetchFailed:
+    }
+    case Const.failed:
       return {
         ...state,
         error: action.payload,

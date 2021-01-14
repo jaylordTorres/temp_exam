@@ -1,6 +1,6 @@
 const fetch = 'car/fetch'
 const fetchSuccess = 'car/fetchSucess'
-const fetchFailed = 'car/fetchFailed'
+const failed = 'car/failed'
 const update = 'car/update'
 const add = 'car/add'
 const setLoading = 'car/setLoading'
@@ -11,7 +11,7 @@ export default {
   add,
   fetch,
   fetchSuccess,
-  fetchFailed,
+  failed,
   update,
   namespace,
   setLoading,
