@@ -5,8 +5,10 @@ export const Colors = {
   backgroundColor: '#EFEDEE',
   cardColor: '#ffffff',
   textColor: '#000000',
+  alerColor: '#ffabab',
   starColor: '#F9E26B',
-  divisorColor: '#9F9F9F'
+  divisorColor: '#9F9F9F',
+  disabledColor: '#C0C0C0'
 }
 
 export const Spacing = {

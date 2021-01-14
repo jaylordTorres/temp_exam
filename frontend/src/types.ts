@@ -14,11 +14,20 @@ export type RootStackParamList = {
   Garage: undefined
   Details: {
     params: ICar
+  },
+  Form: {
+    type: string
   }
 };
 
 
 export interface ActionType<T> {
   type: string
-  payload: T | string
+  id: string
+  payload?: T | string | boolean
+}
+
+export interface Meta {
+  loading: boolean
+  error: string
 }

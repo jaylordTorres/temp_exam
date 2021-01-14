@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Garage from './src/screens/Garage'
 import Detail from './src/screens/Detail'
+import Form from './src/screens/Form'
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ export default function App() {
             options={{ headerShown: false }}
             name="Garage" component={Garage} />
           <Stack.Screen name="Details" component={Detail} />
+          <Stack.Screen name="Form" component={Form} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
