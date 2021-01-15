@@ -19,6 +19,9 @@ import {
   EditIcon,
   Actions,
 } from './styles'
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
+import { CarActions, CarSelector } from '../../store/car'
+import { useCarDetailHook } from './hook'
 
 interface DetialProps {
   route: { params: ICar }
@@ -26,16 +29,7 @@ interface DetialProps {
 }
 
 const Detail = ({ route, navigation }: DetialProps) => {
-  const car = route.params
-  const { star, toggleStar: _toggleStar } = useCarStar(car)
-
-  const _onEdit = useCallback(() => {
-    return navigation.navigate('Form', {
-      type: FormTypes.edit,
-      id: car?.id,
-      car: car
-    })
-  }, [car])
+  const { car, star, onEdit, onToggleStar } = useCarDetailHook({ route, navigation });
 
   return (
     <ScrollView >
@@ -45,10 +39,10 @@ const Detail = ({ route, navigation }: DetialProps) => {
           <Header>
             <Model>{car.model}</Model>
             <Actions>
-              <TouchableOpacity onPress={_onEdit}>
+              <TouchableOpacity onPress={onEdit}>
                 <EditIcon />
               </TouchableOpacity>
-              <TouchableOpacity onPress={_toggleStar}>
+              <TouchableOpacity onPress={onToggleStar}>
                 <StarIcon star={star} />
               </TouchableOpacity>
             </Actions>
