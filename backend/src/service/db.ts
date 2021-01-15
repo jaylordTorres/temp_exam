@@ -58,7 +58,6 @@ export function migration() {
   });
   db.each("SELECT id, car_id, name FROM photo", function (err: Error, row: any) {
     err ? console.log(err) : null
-    console.log(row)
   });
   console.log('db migrated and add contents')
 }
