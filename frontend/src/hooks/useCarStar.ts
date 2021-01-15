@@ -4,7 +4,7 @@ import { toggleStar } from '../store/actions'
 import { useCallback } from "react";
 
 const useCarStar = (car: ICar) => {
-  const star = useSelector<RootStateOrAny>((state) => {
+  const star = useSelector<RootStateOrAny, boolean>((state) => {
     return state.star.starred[car.id]
   })
   const dispatch = useDispatch()
