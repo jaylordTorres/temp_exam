@@ -6,9 +6,11 @@ export interface ICar {
   id: string
   model: string
   make: string
+  make_id: string
   year: string
   image: IImage
 }
+
 export interface IMaker {
   id: string
   name: string

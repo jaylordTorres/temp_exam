@@ -3,7 +3,7 @@ import { ICar, IMaker, Meta } from "../../types";
 export interface CarFormState {
   model: string
   year: string
-  make: string
+  make_id: string
 
 }
 export interface ConfigType {
