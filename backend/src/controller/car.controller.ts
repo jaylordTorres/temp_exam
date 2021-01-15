@@ -1,8 +1,8 @@
 import { Request, Response, Router, NextFunction } from 'express'
 import { createLinkAsset } from '../helper';
-import { getCarPhoto, getCars } from '../service/car.service';
+import { getCarById, getCarPhoto, getCars, updateCarById } from '../service/car.service';
 import { ICar } from '../type';
-import BaseController from './base.cotroller' 
+import BaseController from './base.cotroller'
 
 export default class CarController extends BaseController {
   constructor(router: Router) {
@@ -65,18 +65,19 @@ export default class CarController extends BaseController {
    */
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log(req.body)
-      console.log(req.params.id)
+      /// validation
+      const id = req.params.id
+      const { year, model, make_id } = req.body
+      if ([year, model, make_id].filter(Boolean).length !== 3) {
+        throw new Error('All fields are required')
+      }
+      await updateCarById(model, make_id, year, id)
+      const responseData = await getCarById(id)
+
+      return res.json({ data: responseData })
     } catch (e) {
-      console.log(e.message)
       return res.status(400).send({ message: e.message })
     }
-
-    return res.status(400).send('sample error')
-
-    return res.json({
-      data: req.body
-    })
   }
   /**
    * 
@@ -95,9 +96,9 @@ export default class CarController extends BaseController {
     }
 
     return res.status(400).send('sample delte error')
-    return res.json({
-      data: req.body
-    })
+    // return res.json({
+    //   data: req.body
+    // })
   }
 }
 
