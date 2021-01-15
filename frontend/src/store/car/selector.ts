@@ -12,7 +12,8 @@ const selectCarsMeta = (state: RootStateOrAny): Meta => {
   const carState: CarState = state[Const.namespace];
   return {
     loading: carState.loading,
-    error: carState.error
+    error: carState.error,
+    cache: carState.cache
   }
 }
 

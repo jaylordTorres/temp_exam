@@ -13,7 +13,8 @@ const initState = {
   ids: [],
   values: {},
   loading: false,
-  error: ''
+  error: '',
+  cache: false,
 }
 
 export const carReducer = (state: CarState = initState,
@@ -31,8 +32,8 @@ export const carReducer = (state: CarState = initState,
       const { payload: data } = action as CarFetchSuccessPayloadType
       return {
         ...state,
-        ids: mergeKeys(state.ids, data as ICar[]),
-        values: mergeValues(state.values, data as ICar[]),
+        ids: mergeKeys<ICar>(state.ids, data as ICar[]),
+        values: mergeValues<ICar>(state.values, data as ICar[]),
         error: '',
         loading: false
       }

@@ -9,6 +9,11 @@ export interface ICar {
   year: string
   image: IImage
 }
+export interface IMaker {
+  id: string
+  name: string
+}
+
 export interface ICarEditType extends Partial<ICar> { }
 
 
@@ -20,7 +25,7 @@ export type RootStackParamList = {
   Form: {
     type: string
     id?: string
-    car?: ICar 
+    car?: ICar
   }
 };
 
@@ -34,4 +39,5 @@ export interface ActionType<T> {
 export interface Meta {
   loading: boolean
   error: string
+  cache: boolean
 }

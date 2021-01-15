@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { carReducer } from '../car/reducer'
+import { makerReducer } from '../maker/reducer'
 
 export interface Stars {
   starred: {
@@ -28,5 +29,6 @@ const star = (state: Stars = initState, action: any) => {
 
 export default combineReducers({
   star,
-  car: carReducer
+  car: carReducer,
+  maker: makerReducer,
 })

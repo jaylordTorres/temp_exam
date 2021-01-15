@@ -1,6 +1,5 @@
-import { ICar } from '../types'
 
-export function mergeKeys(old: string[], data: ICar[]) {
+export function mergeKeys<T extends { id: string }>(old: string[], data: T[]) {
   data.forEach(car => {
     if (!old.includes(car.id)) {
       old.push(car.id)
@@ -9,11 +8,11 @@ export function mergeKeys(old: string[], data: ICar[]) {
   return [...old]
 }
 
-export function mergeValues(old: Record<string, ICar>, data: ICar[], overide: boolean = false) {
+export function mergeValues<T extends { id: string }>(old: Record<string, T>, data: T[], overide: boolean = false) {
   const res = old || {}
-  data.forEach((car) => {
-    if (!res[car.id] || overide) {
-      res[car.id] = car
+  data.forEach((i) => {
+    if (!res[i.id] || overide) {
+      res[i.id] = i
     }
   })
   return { ...res }
