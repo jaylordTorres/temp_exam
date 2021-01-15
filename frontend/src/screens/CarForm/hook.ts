@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
+import { Alert } from 'react-native'
 import { FormTypes } from "../../constants"
 import useCarService from '../../hooks/useCarService'
 import useMakerService from "../../hooks/useMakerService"
@@ -36,7 +37,6 @@ export const useCarFormHook = ({ route }: useCarFormHookProps): useCarFormHookTy
   const onSubmit = useCallback(async () => {
     if (config.isEdit) {
       if (config.id) {
-        console.log('sate', state)
         await update(config.id, state)
       }
     } else {
@@ -44,9 +44,22 @@ export const useCarFormHook = ({ route }: useCarFormHookProps): useCarFormHookTy
     }
   }, [config, state])
 
-  const onDelete = useCallback(async () => {
-    if (config.isEdit && config.id) await remove(config.id)
 
+  const onDelete = useCallback(() => {
+    if (config.isEdit && config.id) {
+      Alert.alert(
+        "Delete Confirmation",
+        `Are you sure you want to delete this model ${state.model}?`,
+        [
+          {
+            text: "Cancel",
+            style: "cancel"
+          },
+          { text: "Delete", onPress: () => { config.id && remove(config.id) } }
+        ],
+        { cancelable: false }
+      );
+    }
   }, [config])
 
   return { makers, onSubmit, onDelete, config, state, onChangeMake, onChangeYear, onChangeModel, meta }
