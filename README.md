@@ -4,6 +4,11 @@
 
 ---
 
+# Solutions and Caviets by jaylord
+  - restarting backend will cause thumbs regeneration and new ids from json
+  - photo is random & automatically included on new car
+
+
 ## Garage APP
 
 ![Screenshots](screenshots.png)
