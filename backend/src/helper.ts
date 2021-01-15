@@ -9,13 +9,13 @@ export const promisafy = <T>(fn: Function, arg: any) =>
 export const createLinkAsset = (req: Request, photo?: IPhoto): IImageWithThumbs => {
   const host = req.get('host')
   const name = photo?.name || '.'
-  // const id = photo?.id || ''
-  // const ext = name.split('.').slice(-1)[0];
+  const id = photo?.id || ''
+  const ext = name.split('.').slice(-1)[0];
   return {
     url: `http://${host}/assets/${name}`,
     /// uncomment this if you want to add thumb on response data
-    // xs: `http://${host}/thumb/${id}-xs.${ext}`,
-    // sm: `http://${host}/thumb/${id}-sm.${ext}`,
-    // md: `http://${host}/thumb/${id}-md.${ext}`
+    xs: `http://${host}/thumb/${id}-xs.${ext}`,
+    sm: `http://${host}/thumb/${id}-sm.${ext}`,
+    md: `http://${host}/thumb/${id}-md.${ext}`
   }
 }
