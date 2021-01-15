@@ -5,11 +5,7 @@ import { Colors, Spacing } from '../../styles'
 
 export const Card = styled.View`
   backgroundColor: ${Colors.cardColor};
-  marginHorizontal: ${Spacing.padding}px;
-  shadowOffset: {
-    width: 0;
-    height: 5;
-  };
+  marginHorizontal: ${Spacing.padding}px; 
   shadowOpacity: 0.25;
   shadowRadius: 20px;
   elevation: 2;
