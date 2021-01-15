@@ -93,16 +93,11 @@ export default class CarController extends BaseController {
   async remove(req: Request, res: Response, next: NextFunction) {
     try {
       await removeCarById(req.params.id)
-
+      return res.send({ data: 'delete' })
     } catch (e) {
       console.log(e.message)
       return res.status(400).send({ message: e.message })
     }
-
-    return res.status(400).send('sample delte error')
-    // return res.json({
-    //   data: req.body
-    // })
   }
 
   static validateCar({ year, model, make_id }: { year: number, make_id: string, model: string }) {
