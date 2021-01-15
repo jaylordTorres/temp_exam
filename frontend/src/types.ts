@@ -1,5 +1,8 @@
 export interface IImage {
   url: string
+  md: string
+  sm: string
+  xs: string
 }
 
 export interface ICar {

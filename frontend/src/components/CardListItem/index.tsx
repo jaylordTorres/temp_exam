@@ -26,7 +26,7 @@ const CardListItem: React.FC<CarProps> = ({ car, onPress }) => {
   return (
     <TouchableOpacity onPress={_onPress}>
       <Card>
-        <Cover source={car?.image?.url} />
+        <Cover source={car?.image?.md} />
         <Details>
           <Header>
             <Model>{car.model}</Model>
