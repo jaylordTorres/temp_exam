@@ -12,7 +12,6 @@ interface useCarFormHookProps {
 
 export const useCarFormHook = ({ route }: useCarFormHookProps): useCarFormHookType => {
   const [state, setState] = useState<CarFormState>(Object.assign({}, { make: '', model: '', year: '' }, route.params.car))
-
   const config = useMemo<ConfigType>(() => {
     return {
       isEdit: FormTypes.edit === route.params.type,
@@ -27,23 +26,24 @@ export const useCarFormHook = ({ route }: useCarFormHookProps): useCarFormHookTy
     fetch()
   }, [])
 
-
   const onChange = useCallback((key: string, value: string) =>
     setState((s: CarFormState) => ({ ...s, [key]: value })), [setState])
 
-  const onChangeMake = useCallback((value: string) => onChange('make', value), [onChange])
+  const onChangeMake = useCallback((value: string) => onChange('make_id', value), [onChange])
   const onChangeYear = useCallback((value: string) => onChange('year', value), [onChange])
   const onChangeModel = useCallback((value: string) => onChange('model', value), [onChange])
 
   const onSubmit = useCallback(async () => {
     if (config.isEdit) {
       if (config.id) {
+        console.log('sate', state)
         await update(config.id, state)
       }
     } else {
       await create(state)
     }
-  }, [config])
+  }, [config, state])
+
   const onDelete = useCallback(async () => {
     if (config.isEdit && config.id) await remove(config.id)
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -64,10 +64,9 @@ const CarForm = ({ route }: CarFormProps) => {
             <MakerPicker
               onChange={onChangeMake}
               makers={makers}
-              value={state.make}
+              value={state.make_id}
             />
           </View>
-          {/* <Input value={state.make} onChangeText={onChangeMake} /> */}
         </Field>
       </View>
       <View>
@@ -89,17 +88,20 @@ function MakerPicker({
   onChange,
   makers,
 }: IMakerPickerProps) {
+  const data = useMemo(() => makers.map(i => ({ label: i.name, value: i.id })), [makers]);
+  if (data.length === 0) {
+    return null
+  }
+
   return <DropDownPicker
     placeholder='Select maker'
     placeholderStyle={{ color: Colors.textColor }}
-    items={makers.map(i => ({ label: i.name, value: i.id }))}
+    items={data}
     defaultValue={value}
     selectedLabelStyle={{ color: Colors.textColor }}
     containerStyle={{ height: 40, width: 250, }}
 
-    // style={{ backgroundColor: '#fafafa' }}
     itemStyle={{ justifyContent: 'flex-start' }}
-    // dropDownStyle={{ backgroundColor: '#fafafa' }}
     onChangeItem={item => onChange(item.value)}
   />
 
