@@ -1,4 +1,4 @@
-import { ICar, Meta } from "../../types";
+import { ICar, IMaker, Meta } from "../../types";
 
 export interface CarFormState {
   model: string
@@ -16,6 +16,7 @@ export interface useCarFormHookType {
   config: ConfigType
   state: CarFormState
   meta: Meta
+  makers: IMaker[]
   onChangeMake: (value: string) => void
   onChangeYear: (value: string) => void
   onChangeModel: (value: string) => void

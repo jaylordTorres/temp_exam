@@ -1,7 +1,9 @@
 import React from 'react'
 import { View } from 'react-native'
+import DropDownPicker from 'react-native-dropdown-picker';
+
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../types'
+import { RootStackParamList, IMaker } from '../../types'
 import {
   Caption,
   Label,
@@ -17,6 +19,7 @@ import {
   SubmitIcon
 } from './styles'
 import { useCarFormHook } from './hook'
+import { Colors } from '../../styles'
 
 interface CarFormProps {
   route: { params: { type: string, id?: string } }
@@ -28,6 +31,7 @@ const CarForm = ({ route }: CarFormProps) => {
     config,
     meta,
     state,
+    makers,
     onSubmit,
     onDelete,
     onChangeMake,
@@ -56,15 +60,49 @@ const CarForm = ({ route }: CarFormProps) => {
         </Field>
         <Field>
           <Label>Make:</Label>
-          <Input value={state.make} onChangeText={onChangeMake} />
+          <View>
+            <MakerPicker
+              onChange={onChangeMake}
+              makers={makers}
+              value={state.make}
+            />
+          </View>
+          {/* <Input value={state.make} onChangeText={onChangeMake} /> */}
         </Field>
       </View>
       <View>
         {meta.loading && <Loading>...Loading</Loading>}
-        <ErrorLabel>{meta.error}</ErrorLabel> 
+        <ErrorLabel>{meta.error}</ErrorLabel>
       </View>
     </Container>
   )
+}
+
+interface IMakerPickerProps {
+  value: string
+  onChange: (value: string) => void
+  makers: IMaker[]
+}
+
+function MakerPicker({
+  value,
+  onChange,
+  makers,
+}: IMakerPickerProps) {
+  return <DropDownPicker
+    placeholder='Select maker'
+    placeholderStyle={{ color: Colors.textColor }}
+    items={makers.map(i => ({ label: i.name, value: i.id }))}
+    defaultValue={value}
+    selectedLabelStyle={{ color: Colors.textColor }}
+    containerStyle={{ height: 40, width: 250, }}
+
+    // style={{ backgroundColor: '#fafafa' }}
+    itemStyle={{ justifyContent: 'flex-start' }}
+    // dropDownStyle={{ backgroundColor: '#fafafa' }}
+    onChangeItem={item => onChange(item.value)}
+  />
+
 }
 
 

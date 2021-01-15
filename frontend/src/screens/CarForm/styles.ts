@@ -22,9 +22,10 @@ export const Field = styled.View`
 
 export const Input = styled.TextInput`
   height: 40px;
-  borderColor: #C0C0C0;
+  borderColor: #d8d8d8;
   borderWidth: 1px;
-  width: 60%;
+  borderRadius: 4px;
+  width: 250px;
   padding: 8px
 `
 

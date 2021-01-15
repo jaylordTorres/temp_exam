@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { FormTypes } from "../../constants"
 import useCarService from '../../hooks/useCarService'
+import useMakerService from "../../hooks/useMakerService"
 import { ICar } from "../../types"
 import { CarFormState, ConfigType, useCarFormHookType } from './type'
 
@@ -21,6 +22,10 @@ export const useCarFormHook = ({ route }: useCarFormHookProps): useCarFormHookTy
   }, [route])
 
   const { create, update, remove, meta } = useCarService()
+  const { makers, fetch } = useMakerService()
+  useEffect(() => {
+    fetch()
+  }, [])
 
 
   const onChange = useCallback((key: string, value: string) =>
@@ -44,5 +49,5 @@ export const useCarFormHook = ({ route }: useCarFormHookProps): useCarFormHookTy
 
   }, [config])
 
-  return { onSubmit, onDelete, config, state, onChangeMake, onChangeYear, onChangeModel, meta }
+  return { makers, onSubmit, onDelete, config, state, onChangeMake, onChangeYear, onChangeModel, meta }
 }
