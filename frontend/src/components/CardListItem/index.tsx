@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { ICar } from '../../types'
+import { useCarStar } from '../../hooks'
 import Cover from '../Cover'
-import useCarStar from '../../hooks/useCarStar'
 import {
   Card,
   Header,
