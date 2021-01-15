@@ -31,6 +31,9 @@ interface DetialProps {
 const Detail = ({ route, navigation }: DetialProps) => {
   const { car, star, onEdit, onToggleStar } = useCarDetailHook({ route, navigation });
 
+  if (!car) {
+    return null
+  }
   return (
     <ScrollView >
       <Card>

@@ -20,6 +20,14 @@ export const useCarDetailHook = ({ route, navigation }: useCarDetailHookProps): 
   const car = useSelector<RootStateOrAny, ICar>(s => CarSelector.selectCar(s, paramCar.id))
   const { star, toggleStar } = useCarStar(paramCar)
 
+  useEffect(() => {
+    if (!car) {
+      // remove this screen and form screen
+      navigation.pop(2)
+    }
+
+  }, [car, navigation])
+
   const _updateCarForm = useCallback((car) => {
     dispatch(CarActions.updateForm(car))
   }, [dispatch])

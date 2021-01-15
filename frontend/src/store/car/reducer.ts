@@ -69,13 +69,8 @@ export const carReducer = (state: CarState = initState,
       const { id } = action;
       return {
         ...state,
-        ids: [
-          ...state.ids.filter(i => i != id)
-        ],
-        values: {
-          ...state.values,
-          [id]: undefined
-        }
+        ids: state.ids.filter(i => i != id),
+        values: { ...state.values, [id]: undefined }
       }
     }
 
