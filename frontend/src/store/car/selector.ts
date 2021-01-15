@@ -6,7 +6,7 @@ import { CarState } from './type'
 const selectCars = (state: RootStateOrAny): ICar[] => {
   /// useSelector will automatically memoize this
   /// unlike calling it as anoymouse function that does not memoize
-  return state[Const.namespace].ids.map((id: string) => state.values[id])
+  return state[Const.namespace].ids.map((id: string) => state[Const.namespace].values[id])
 }
 const selectCarsMeta = (state: RootStateOrAny): Meta => {
   const carState: CarState = state[Const.namespace];

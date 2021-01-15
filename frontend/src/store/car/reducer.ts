@@ -1,4 +1,5 @@
-import { ActionType } from '../../types'
+import { ActionType, ICar } from '../../types'
+import { mergeKeys, mergeValues } from '../util'
 import {
   CarAddPayloadType,
   CarFailedPayloadType,
@@ -27,9 +28,11 @@ export const carReducer = (state: CarState = initState,
       }
     }
     case Const.fetchSuccess: {
+      const { payload: data } = action as CarFetchSuccessPayloadType
       return {
         ...state,
-        ...action.payload as CarFetchSuccessPayloadType,
+        ids: mergeKeys(state.ids, data as ICar[]),
+        values: mergeValues(state.values, data as ICar[]),
         error: '',
         loading: false
       }
@@ -81,7 +84,6 @@ export const carReducer = (state: CarState = initState,
     }
 
     case Const.setLoading: {
-      /// will add new id on ids, create values item 
       return {
         ...state,
         loading: action.payload
