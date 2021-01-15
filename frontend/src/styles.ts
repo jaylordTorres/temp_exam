@@ -8,7 +8,8 @@ export const Colors = {
   alerColor: '#ffabab',
   starColor: '#F9E26B',
   divisorColor: '#9F9F9F',
-  disabledColor: '#C0C0C0'
+  disabledColor: '#C0C0C0',
+  primaryColor: '#F9E26B'
 }
 
 export const Spacing = {
