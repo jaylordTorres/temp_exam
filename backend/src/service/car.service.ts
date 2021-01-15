@@ -28,3 +28,5 @@ export const updateCarById = promisafy<ICar>(db.run.bind(db),
     year = ?
   WHERE id = ?`
 )
+
+export const removeCarById = promisafy<ICar>(db.run.bind(db), `DELETE car WHERE car.id = ?`)

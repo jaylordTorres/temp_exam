@@ -1,6 +1,6 @@
 import { Request, Response, Router, NextFunction } from 'express'
 import { createLinkAsset } from '../helper';
-import { getCarById, getCarPhoto, getCars, updateCarById } from '../service/car.service';
+import { removeCarById, getCarById, getCarPhoto, getCars, updateCarById } from '../service/car.service';
 import { ICar } from '../type';
 import BaseController from './base.cotroller'
 
@@ -73,7 +73,6 @@ export default class CarController extends BaseController {
       }
       await updateCarById(model, make_id, year, id)
       const responseData = await getCarById(id)
-
       return res.json({ data: responseData })
     } catch (e) {
       return res.status(400).send({ message: e.message })
@@ -83,13 +82,13 @@ export default class CarController extends BaseController {
    * 
    * @param req [Request]
    * @param res [Response]
-   * @returns [ICar[]]
+   * @returns null
    * 
    */
   async remove(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log(req.body)
-      console.log(req.params.id)
+      await removeCarById(req.params.id)
+
     } catch (e) {
       console.log(e.message)
       return res.status(400).send({ message: e.message })
