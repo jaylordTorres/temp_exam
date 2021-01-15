@@ -16,9 +16,21 @@ const selectCarsMeta = (state: RootStateOrAny): Meta => {
     cache: carState.cache
   }
 }
+const selectCar = (state: RootStateOrAny, id: string): ICar => {
+  const carState: CarState = state[Const.namespace];
+  return carState.values[id];
+}
+
+const selectForm = (state: RootStateOrAny): ICar => {
+  /// useSelector will automatically memoize this
+  /// unlike calling it as anoymouse function that does not memoize
+  return state[Const.namespace].form
+}
 
 
 export default {
   selectCars,
-  selectCarsMeta
+  selectCar,
+  selectCarsMeta,
+  selectForm
 }

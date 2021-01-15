@@ -1,7 +1,7 @@
 import { url } from "./api"
 import { validateResponseError } from "./util"
 
-const baseUrl = url + '/car'
+const baseUrl = url + '/car/'
 
 export const getCars = async () => {
   return await fetch(baseUrl, { method: "GET" }).then(r => r.json())
@@ -10,7 +10,8 @@ export const getCars = async () => {
 export const createCar = async (data: any) => {
   return await fetch(baseUrl, {
     body: JSON.stringify(data),
-    method: "POST"
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
   }).then(validateResponseError).then(r => r.json())
 }
 
@@ -18,7 +19,8 @@ export const createCar = async (data: any) => {
 export const updateCar = async (id: string, data: any) => {
   return await fetch(`${baseUrl}${id}`, {
     body: JSON.stringify(data),
-    method: "PUT"
+    method: "PUT",
+    headers: { 'Content-Type': 'application/json' },
   }).then(validateResponseError).then(r => r.json())
 }
 

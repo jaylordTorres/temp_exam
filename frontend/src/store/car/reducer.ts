@@ -15,10 +15,11 @@ const initState = {
   loading: false,
   error: '',
   cache: false,
+  form: null, // changes on async update
 }
 
 export const carReducer = (state: CarState = initState,
-  action: ActionType<CarUpdatePayloadType | CarFetchSuccessPayloadType | CarFailedPayloadType>) => {
+  action: ActionType<ICar | CarUpdatePayloadType | CarFetchSuccessPayloadType | CarFailedPayloadType>) => {
 
 
   switch (action.type) {
@@ -45,15 +46,25 @@ export const carReducer = (state: CarState = initState,
         loading: false
       }
     case Const.update: {
-      const { id, data } = action.payload as CarUpdatePayloadType
+      const { id, payload: data } = action
+      // as CarUpdatePayloadType 
+
       return {
         ...state,
         values: {
           ...state.values,
-          [id]: data
+          [id]: {
+            ...(state.values[id] || {}),
+            ...(typeof data === 'object' ? data : {}),
+          }
+        },
+        form: {
+          ...(state.form || {}),
+          ...(data as ICar || {})
         }
       }
     }
+
     case Const.remove: {
       const { id } = action;
       return {
@@ -81,6 +92,14 @@ export const carReducer = (state: CarState = initState,
           ...state.values,
           [data.id]: data
         }
+      }
+    }
+
+    case Const.updateForm: {
+      const data = action.payload as ICar
+      return {
+        ...state,
+        form: data
       }
     }
 

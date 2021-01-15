@@ -5,12 +5,14 @@ import {
   CarUpdatePayloadType,
 } from './type'
 import Const from './constant'
+import { ICar } from '../../types'
 
 const fetch = () => ({ type: Const.fetch })
 const fetchSuccess = (payload: CarFetchSuccessPayloadType) => ({ payload, type: Const.fetchSuccess })
 const failed = (payload: CarFailedPayloadType) => ({ payload, type: Const.failed })
 const update = (id: string, payload: CarUpdatePayloadType) => ({ id, payload, type: Const.update })
 const add = (payload: CarAddPayloadType) => ({ payload, type: Const.add })
+const updateForm = (payload: ICar) => ({ payload, type: Const.updateForm })
 
 const remove = (id: string) => ({ id, type: Const.remove })
 const setLoading = (payload: boolean) => ({ payload, type: Const.setLoading })
@@ -22,6 +24,7 @@ export default {
   failed,
   update,
   setLoading,
-  remove
+  remove,
+  updateForm
 }
 

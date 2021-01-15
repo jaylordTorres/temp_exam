@@ -20,4 +20,5 @@ export interface CarState {
   loading: boolean
   error: string
   cache: boolean
+  form: ICar | null
 }

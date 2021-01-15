@@ -1,11 +1,14 @@
+const namespace = 'car'
+
 const fetch = 'car/fetch'
 const fetchSuccess = 'car/fetchSucess'
 const failed = 'car/failed'
 const update = 'car/update'
 const add = 'car/add'
 const setLoading = 'car/setLoading'
+const updateForm = 'car/updateForm'
 const remove = 'car/remove'
-const namespace = 'car'
+
 
 export default {
   add,
@@ -15,5 +18,6 @@ export default {
   update,
   namespace,
   setLoading,
-  remove
+  remove,
+  updateForm
 }
