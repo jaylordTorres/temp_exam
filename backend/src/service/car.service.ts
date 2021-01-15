@@ -3,6 +3,8 @@ import { ICar, IMaker, IPhoto } from '../type'
 import { promisafy } from '../helper'
 
 
+// id, make_id, model, year
+export const createCar = promisafy<ICar>(db.run.bind(db), "INSERT INTO car VALUES (?, ?, ?, ?)")
 
 export const getCars = promisafy<ICar[]>(db.all.bind(db),
   `SELECT car.id as id, car.make_id as make_id, make.name as make, model, year FROM car LEFT JOIN make ON make.id = car.make_id`)
