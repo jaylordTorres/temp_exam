@@ -1,9 +1,9 @@
 import { ICar, ICarJson, IMaker } from '../type';
 import { optimize as optimizePhoto } from './upload';
 import Sqlite from 'sqlite3';
+import { assets, genId, getRanodmImageFilename } from './util';
 
 const sqlite3 = Sqlite.verbose();
-const genId = require('uuid').v4;
 const data = require('../cars.json')
 
 export const db = new sqlite3.Database(':memory:');
@@ -38,7 +38,6 @@ export function migration() {
   })
 
   /// process images
-  const assets = getAssets();
   const assetSmt = db.prepare("INSERT INTO photo VALUES (?, ?, ?)");
   db.each("SELECT id, make_id, year, model FROM car", function (err: Error, car: ICar) {
     if (err) { return; }
@@ -78,23 +77,6 @@ function toIds(item: IMaker[] = []): Record<string, string> {
   return item.reduce((c, p) => ({ ...c, [p.name]: p.id }), {})
 }
 
-/// get all prefilled assets
-/// will use to randomaise json items photos
-function getAssets(): string[] {
-  const assets: string[] = [];
-  const files = './assets/';
-  const fs = require('fs');
-  fs.readdirSync(files).forEach((file: string) => {
-    if (file.match(/\.jpg/i)) {
-      assets.push(file)
-    }
-  });
-
-  return assets
-}
-function getRanodmImageFilename(images: string[]): string {
-  return images[Math.floor(Math.random() * images.length)]
-}
 
 export function iniitalize() {
   db.serialize(migration)
