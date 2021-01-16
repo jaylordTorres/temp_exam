@@ -56,9 +56,11 @@ export default class CarController extends BaseController {
       const tempImage = randoImage()
       await createCar(carId, make_id, model, year)
       await createPhoto(photoId, carId, tempImage)
-      await optimize(carId, 'assets/' + tempImage, 'jpg')
+      await optimize(photoId, 'assets/' + tempImage, 'jpg')
       const data = await getCarById(carId)
-      return res.json({ data })
+      const photo = await getCarPhoto(carId);
+      const response = { ...data, image: createLinkAsset(req, photo) }
+      return res.json({ data: response })
     } catch (e) {
       return res.status(400).send({ message: e.message })
     }

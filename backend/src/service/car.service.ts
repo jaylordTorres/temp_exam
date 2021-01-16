@@ -7,7 +7,7 @@ import { promisafy } from '../helper'
 export const createCar = promisafy<ICar>(db.run.bind(db), "INSERT INTO car VALUES (?, ?, ?, ?)")
 
 export const getCars = promisafy<ICar[]>(db.all.bind(db),
-  `SELECT car.id as id, car.make_id as make_id, make.name as make, model, year FROM car LEFT JOIN make ON make.id = car.make_id`)
+  `SELECT car.id as id, car.make_id as make_id, make.name as make_name, model, year FROM car LEFT JOIN make ON make.id = car.make_id`)
 
 export const getCarById = promisafy<ICar>(db.get.bind(db),
   `SELECT car.id as id, car.make_id as make_id, make.name as make_name, model, year 
