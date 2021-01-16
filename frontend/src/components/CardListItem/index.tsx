@@ -36,7 +36,7 @@ const CardListItem: React.FC<CarProps> = ({ car, onPress }) => {
           </Header>
           <Line />
           <MakeYear>
-            {car.make} | {car.year}
+            {car.make_name} | {car.year}
           </MakeYear>
         </Details>
       </Card>

@@ -8,7 +8,7 @@ export interface IImage {
 export interface ICar {
   id: string
   model: string
-  make: string
+  make_name: string
   make_id: string
   year: string
   image: IImage
