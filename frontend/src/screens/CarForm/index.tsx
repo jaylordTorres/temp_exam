@@ -26,7 +26,7 @@ interface CarFormProps {
   navigation: StackNavigationProp<RootStackParamList>
 }
 
-const CarForm = ({ route }: CarFormProps) => {
+const CarForm = ({ route, navigation }: CarFormProps) => {
   const {
     config,
     meta,
@@ -37,7 +37,7 @@ const CarForm = ({ route }: CarFormProps) => {
     onChangeMake,
     onChangeModel,
     onChangeYear
-  } = useCarFormHook({ route })
+  } = useCarFormHook({ route, navigation })
   return (
     <Container>
       <Actions>

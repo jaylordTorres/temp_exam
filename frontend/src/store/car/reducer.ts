@@ -75,18 +75,11 @@ export const carReducer = (state: CarState = initState,
     }
 
     case Const.add: {
-      /// will add new id on ids, create values item 
-      const { data } = action.payload as CarAddPayloadType
+      const data = action.payload as ICar
       return {
         ...state,
-        ids: [
-          data.id,
-          ...state.ids
-        ],
-        values: {
-          ...state.values,
-          [data.id]: data
-        }
+        ids: [data.id, ...state.ids],
+        values: { ...state.values, [data.id]: data }
       }
     }
 

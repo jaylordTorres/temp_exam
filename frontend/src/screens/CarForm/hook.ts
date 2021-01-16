@@ -1,17 +1,19 @@
+import { StackNavigationProp } from "@react-navigation/stack"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { Alert } from 'react-native'
 import { FormTypes } from "../../constants"
 import useCarService from '../../hooks/useCarService'
 import useMakerService from "../../hooks/useMakerService"
-import { ICar } from "../../types"
+import { ICar, RootStackParamList } from "../../types"
 import { CarFormState, ConfigType, useCarFormHookType } from './type'
 
 
 interface useCarFormHookProps {
-  route: { params: { type: string, id?: string, car?: ICar } }
+  route: { params: { type: string, id?: string, car?: ICar } },
+  navigation: StackNavigationProp<RootStackParamList>
 }
 
-export const useCarFormHook = ({ route }: useCarFormHookProps): useCarFormHookType => {
+export const useCarFormHook = ({ route, navigation }: useCarFormHookProps): useCarFormHookType => {
   const [state, setState] = useState<CarFormState>(Object.assign({}, { make: '', model: '', year: '' }, route.params.car))
   const config = useMemo<ConfigType>(() => {
     return {
@@ -41,6 +43,7 @@ export const useCarFormHook = ({ route }: useCarFormHookProps): useCarFormHookTy
       }
     } else {
       await create(state)
+      navigation.pop()
     }
   }, [config, state])
 
